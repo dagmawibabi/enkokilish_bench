@@ -1,29 +1,39 @@
 import { evalite } from "evalite";
 import { generateText } from "ai";
-// import { google } from "@ai-sdk/google"; // OPTIONAL
-// import { wrapAISDKModel } from "evalite/ai-sdk"; // OPTIONAL
 import { contains } from "evalite/scorers/deterministic";
 import { enkokilish_dataset } from "../datasets/enkokilish";
 import { systemPrompt } from "../system_prompt/system_prompt";
+import { reportTrace } from "evalite/traces";
+import { modelsToBenchmark } from "../eval_config/models_to_benchmark";
 
 // Import Datase
 const dataset = enkokilish_dataset;
 
-// Wrap once, use everywhere
-const model = "google/gemini-2.5-flash-lite";
-// const model = google("gemini-2.5-flash"); // Optionally use a provider
-// const model = wrapAISDKModel(google("gemini-2.5-flash-lite")); // Wrap to get traces
+let totalCost = 0;
 
 // Benchmark
-evalite("Enkokilish Bench", {
+evalite.each(modelsToBenchmark)("Enkokilish Bench", {
   data: async () => dataset,
-  task: async (input) => {
+  task: async (input, model) => {
     const result = await generateText({
       model: model,
       system: systemPrompt,
       prompt: input,
     });
 
+    reportTrace({
+      start: 0,
+      end: 100,
+      input: { prompt: input },
+      output: { result: result },
+      usage: {
+        inputTokens: result.usage.inputTokens || 0,
+        outputTokens: result.usage.outputTokens || 0,
+        totalTokens: result.usage.totalTokens || 0,
+      },
+    });
+
+    totalCost += Number(result.providerMetadata?.gateway?.marketCost ?? 0);
     return result;
   },
   scorers: [
@@ -35,37 +45,39 @@ evalite("Enkokilish Bench", {
         }),
     },
   ],
-  columns: async (result) => {
+  columns: async ({ input, output, expected, traces }) => {
     return [
       {
         label: "Input",
-        value: result.input,
+        value: input,
       },
       {
         label: "Output",
-        value: result.output.text,
+        value: output.text,
       },
       {
         label: "Expected",
-        value: result.expected,
+        value: expected,
       },
       {
         label: "InTok",
-        value: result.output.usage.inputTokens || 0,
+        value: output.usage.inputTokens || 0,
       },
       {
         label: "OutTok",
-        value: result.output.usage.outputTokens || 0,
+        value: output.usage.outputTokens || 0,
       },
       {
         label: "TotTok",
-        value: result.output.usage.totalTokens || 0,
+        value: output.usage.totalTokens || 0,
       },
       {
         label: "Cost",
-        value: result.output.providerMetadata?.["gateway"]["marketCost"],
+        value: output.providerMetadata?.["gateway"]["marketCost"],
       },
     ];
   },
   // trialCount: 5,  // Run each data point 5 times
 });
+
+console.log("Total Cost: ", totalCost);
