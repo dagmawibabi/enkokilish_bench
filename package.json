@@ -1,0 +1,13 @@
+{
+	"scripts": {
+		"eval:dev": "evalite watch"
+	},
+	"devDependencies": {
+		"evalite": "1.0.0-beta.15",
+		"vitest": "^4.0.14"
+	},
+	"dependencies": {
+		"@ai-sdk/google": "^2.0.44",
+		"ai": "^5.0.104"
+	}
+}
