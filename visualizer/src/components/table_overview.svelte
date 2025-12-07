@@ -16,7 +16,8 @@
 				<Table.Head class="font-semibold">OutTok</Table.Head>
 				<Table.Head class="font-semibold">TotTok</Table.Head>
 				<Table.Head class="font-semibold">Cost</Table.Head>
-				<Table.Head class="font-semibold">Duration</Table.Head>
+				<!-- <Table.Head class="font-semibold">Duration</Table.Head> -->
+				<Table.Head class="font-semibold">Date</Table.Head>
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>
@@ -28,9 +29,10 @@
 					<Table.Cell>{result.averageScore}</Table.Cell>
 					<Table.Cell>{result.totalInputTokens}</Table.Cell>
 					<Table.Cell>{result.totalOutputTokens}</Table.Cell>
-					<Table.Cell>{result.totalTokens}</Table.Cell>
-					<Table.Cell>${result.totalCost}</Table.Cell>
-					<Table.Cell>{result.totalDuration} ms</Table.Cell>
+					<Table.Cell class="text-blue-600 font-semibold">{result.totalTokens}</Table.Cell>
+					<Table.Cell class="text-teal-600 font-semibold">${result.totalCost}</Table.Cell>
+					<!-- <Table.Cell>{result.totalDuration} ms</Table.Cell> -->
+					<Table.Cell>{result.date}</Table.Cell>
 				</Table.Row>
 			{/each}
 		</Table.Body>
