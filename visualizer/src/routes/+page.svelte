@@ -8,6 +8,16 @@
 	import novalite from '$lib/results/nova-lite.json';
 	import trinitymini from '$lib/results/trinity-mini.json';
 	import gptoss20b from '$lib/results/gpt-oss-20b.json';
+	// import english_riddles from '$lib/results/english/';
+	import gemini25flashen from '$lib/results/english/gemini-2.5-flash-en.json';
+	import gemini25flashliteen from '$lib/results/english/gemini-2.5-flash-lite-en.json';
+	import gemini20flashliteen from '$lib/results/english/gemini-2.0-flash-lite-en.json';
+	import grok4fastnonreasoningen from '$lib/results/english/grok-4-fast-non-reasoning-en.json';
+	import llama318ben from '$lib/results/english/llama-3.1-8b-en.json';
+	import deepseekv32en from '$lib/results/english/deepseek-v3.2-en.json';
+	import novaliteen from '$lib/results/english/nova-lite-en.json';
+	import trinityminien from '$lib/results/english/trinity-mini-en.json';
+	import gptoss20ben from '$lib/results/english/gpt-oss-20b-en.json';
 	import Date from '../components/date.svelte';
 	import FailGraph from '../components/fail_graph.svelte';
 	import Header from '../components/header.svelte';
@@ -26,7 +36,7 @@
 
 	const formatter = new Intl.NumberFormat('en-US');
 
-	let rawResults = [
+	let rawResultsAM = [
 		gemini25flash,
 		gemini25flashlite,
 		gemini20flashlite,
@@ -38,9 +48,21 @@
 		gptoss20b
 	];
 
-	let evalResults: eachEvalResultType[] = [];
-	let evalResultsForGraphs: eachEvalResultType[] = [];
-	let evalResultsForTables: eachEvalResultType[] = [];
+	let rawResultsEN = [
+		gemini25flashen,
+		gemini25flashliteen,
+		gemini20flashliteen,
+		grok4fastnonreasoningen,
+		llama318ben,
+		deepseekv32en,
+		novaliteen,
+		trinityminien,
+		gptoss20ben
+	];
+
+	let evalResults: eachEvalResultType[] = $state([]);
+	let evalResultsForGraphs: eachEvalResultType[] = $state([]);
+	let evalResultsForTables: eachEvalResultType[] = $state([]);
 
 	interface eachEvalResultType {
 		model: string;
@@ -95,7 +117,16 @@
 
 	// formatResult(result);
 
-	function loopThroughEvals() {
+	let systemPrompt: string | { type: string; text: string }[] = $state('');
+	function loopThroughEvals(rawResults: unknown[]) {
+		evalResults = [];
+		evalResultsForGraphs = [];
+		evalResultsForTables = [];
+		systemPrompt =
+			rawResults[0].suites?.[0]?.evals?.[0]?.output?.steps?.[0]?.request?.body?.prompt?.[0]
+				?.content ||
+			'You are an Amharic riddle solver. Try your best to solve every riddle you are asked. Respond with one word or phrase only.';
+
 		for (let eachRawEval of rawResults) {
 			formatResult(eachRawEval);
 		}
@@ -120,34 +151,106 @@
 		}));
 	}
 
-	loopThroughEvals();
+	loopThroughEvals(rawResultsAM);
 
-	let systemPrompt =
-		rawResults[0].suites?.[0]?.evals?.[0]?.output?.steps?.[0]?.request?.body?.prompt?.[0]
-			?.content ||
-		'You are an Amharic riddle solver. Try your best to solve every riddle you are asked. Respond with one word or phrase only.';
+	let isAmharic = $state(true);
 </script>
 
 <div class="h-screen">
 	<div class="w-[90vw] md:w-2/3 m-auto pb-56">
 		<!-- Header -->
-		<Header time={rawResults[0].run.createdAt} />
+		<Header time={isAmharic ? rawResultsAM[0].run.createdAt : rawResultsEN[0].run.createdAt} />
 
 		<div class="flex md:hidden mb-2">
-			<Date time={rawResults[0].run.createdAt} />
+			<Date time={isAmharic ? rawResultsAM[0].run.createdAt : rawResultsEN[0].run.createdAt} />
 		</div>
 
-		<div class="rounded-lg bg-neutral-100 border overflow-clip mt-2 mb-6">
-			<div class="bg-neutral-200 flex justify-between px-3 py-1 text-sm italic">
-				<div>System Prompt</div>
+		<div class="inline-block md:flex gap-x-4">
+			<div class="rounded-lg bg-neutral-100 w-full md:w-4/5 border overflow-clip mt-2 mb-6 gap-x-4">
+				<div class="bg-neutral-200 flex justify-between px-3 py-1 text-sm italic">
+					<div>System Prompt</div>
+				</div>
+				<div class="px-3 py-1 text-sm">
+					{systemPrompt}
+				</div>
 			</div>
-			<div class="px-3 py-1">
-				{systemPrompt}
+
+			<div class="rounded-lg flex flex-row gap-x-1 md:flex-col overflow-clip mt-2 mb-6 gap-y-1">
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<div
+					class=" hover:bg-neutral-200 border items-center h-full rounded-lg flex cursor-pointer justify-between px-3 py-1 text-sm"
+					class:text-emerald-600={isAmharic}
+					class:border-emerald-500={isAmharic}
+					class:border-neutral-400={!isAmharic}
+					class:bg-neutral-200={!isAmharic}
+					class:bg-emerald-50={isAmharic}
+					onclick={() => {
+						loopThroughEvals(rawResultsAM);
+						isAmharic = true;
+					}}
+				>
+					<div>Amharic Riddle Results</div>
+				</div>
+
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<div
+					class=" hover:bg-neutral-200 border items-center h-full rounded-lg flex cursor-pointer justify-between px-3 py-1 text-sm"
+					class:text-emerald-600={!isAmharic}
+					class:border-emerald-500={!isAmharic}
+					class:border-neutral-400={isAmharic}
+					class:bg-neutral-200={isAmharic}
+					class:bg-emerald-50={!isAmharic}
+					onclick={() => {
+						loopThroughEvals(rawResultsEN);
+						isAmharic = false;
+					}}
+				>
+					<div>English Riddle Results</div>
+				</div>
 			</div>
 		</div>
 
 		<!-- Table Overview -->
 		<TableOverview evalResults={evalResultsForTables} />
+
+		<!-- Buttons -->
+		<div class="rounded-lg flex flex-row gap-x-2 overflow-clip mt-2 mb-6 gap-y-1">
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<div
+				class=" hover:bg-neutral-200 border items-center h-full rounded-lg flex cursor-pointer justify-between px-3 py-1 text-sm"
+				class:text-emerald-600={isAmharic}
+				class:border-emerald-500={isAmharic}
+				class:border-neutral-400={!isAmharic}
+				class:bg-neutral-200={!isAmharic}
+				class:bg-emerald-50={isAmharic}
+				onclick={() => {
+					loopThroughEvals(rawResultsAM);
+					isAmharic = true;
+				}}
+			>
+				<div>Amharic Riddle Results</div>
+			</div>
+
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<div
+				class=" hover:bg-neutral-200 border items-center h-full rounded-lg flex cursor-pointer justify-between px-3 py-1 text-sm"
+				class:text-emerald-600={!isAmharic}
+				class:border-emerald-500={!isAmharic}
+				class:border-neutral-400={isAmharic}
+				class:bg-neutral-200={isAmharic}
+				class:bg-emerald-50={!isAmharic}
+				onclick={() => {
+					loopThroughEvals(rawResultsEN);
+					isAmharic = false;
+				}}
+			>
+				<div>English Riddle Results</div>
+			</div>
+		</div>
 
 		<!-- Succes vs Fail Rates -->
 		<div class="flex flex-col md:flex-row w-full gap-x-2 gap-y-4 md:gap-y-0 pb-5">
@@ -172,7 +275,7 @@
 		</div>
 
 		<!-- Cost vs Duration -->
-		<div class="flex flex-col md:flex-row w-full gap-x-2 gap-y-4 md:gap-y-0">
+		<div class="flex flex-col md:flex-row w-full gap-x-2 gap-y-4 md:gap-y-0 pb-5">
 			<div class="w-full">
 				<div class="flex items-center gap-x-2 pl-4 pb-2">
 					<div class="w-2 h-2 bg-teal-500 rounded-full"></div>
@@ -203,6 +306,43 @@
 		</div>
 
 		<!-- <SuccessFailGraph evalResults={evalResultsForGraphs} /> -->
+
+		<!-- Buttons -->
+		<div class="rounded-lg flex flex-row gap-x-2 overflow-clip mt-4 mb-0 gap-y-1">
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<div
+				class=" hover:bg-neutral-200 border items-center h-full rounded-lg flex cursor-pointer justify-between px-3 py-1 text-sm"
+				class:text-emerald-600={isAmharic}
+				class:border-emerald-500={isAmharic}
+				class:border-neutral-400={!isAmharic}
+				class:bg-neutral-200={!isAmharic}
+				class:bg-emerald-50={isAmharic}
+				onclick={() => {
+					loopThroughEvals(rawResultsAM);
+					isAmharic = true;
+				}}
+			>
+				<div>Amharic Riddle Results</div>
+			</div>
+
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<div
+				class=" hover:bg-neutral-200 border items-center h-full rounded-lg flex cursor-pointer justify-between px-3 py-1 text-sm"
+				class:text-emerald-600={!isAmharic}
+				class:border-emerald-500={!isAmharic}
+				class:border-neutral-400={isAmharic}
+				class:bg-neutral-200={isAmharic}
+				class:bg-emerald-50={!isAmharic}
+				onclick={() => {
+					loopThroughEvals(rawResultsEN);
+					isAmharic = false;
+				}}
+			>
+				<div>English Riddle Results</div>
+			</div>
+		</div>
 
 		<EvalSummary {evalResults} />
 	</div>

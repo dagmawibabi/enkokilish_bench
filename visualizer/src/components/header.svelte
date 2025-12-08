@@ -4,6 +4,8 @@
 	import Date from './date.svelte';
 
 	let { time } = $props();
+
+	let timeState = $derived(time);
 </script>
 
 <div class="flex justify-between items-center pt-5 pb-3 pr-5">
@@ -14,7 +16,7 @@
 
 	<div class="flex gap-x-2 items-center">
 		<div class="hidden md:flex">
-			<Date {time} />
+			<Date time={timeState} />
 		</div>
 
 		<a href="https://github.com/ScholarXIV/enkokilish_bench" class="hover:text-blue-500">

@@ -2,12 +2,13 @@ import { evalite } from "evalite";
 import { generateText } from "ai";
 import { contains } from "evalite/scorers/deterministic";
 import { enkokilish_dataset } from "../datasets/enkokilish";
+import { riddles_dataset } from "../datasets/riddles";
 import { reportTrace } from "evalite/traces";
 import { modelsToBenchmark } from "../eval_config/models_to_benchmark";
-import { systemPrompt } from "../eval_config/system_prompt";
+import { systemPrompt, systemPrompt2 } from "../eval_config/system_prompt";
 
 // Import Dataset
-const dataset = enkokilish_dataset;
+const dataset = riddles_dataset; // enkokilish_dataset; // riddles_dataset;
 
 // Benchmark
 evalite.each(modelsToBenchmark)("Enkokilish Bench", {
@@ -16,7 +17,7 @@ evalite.each(modelsToBenchmark)("Enkokilish Bench", {
     try {
       const result = await generateText({
         model: model,
-        system: systemPrompt,
+        system: systemPrompt2, // systemPrompt2
         prompt: input,
       });
 

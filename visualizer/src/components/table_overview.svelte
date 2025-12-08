@@ -21,7 +21,7 @@
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>
-			{#each evalResults as result (result.model)}
+			{#each evalResults as result (result.totalTokens)}
 				<Table.Row>
 					<Table.Cell class="font-semibold">{result.model}</Table.Cell>
 					<Table.Cell class="text-emerald-600 font-semibold">{result.successCount}</Table.Cell>
