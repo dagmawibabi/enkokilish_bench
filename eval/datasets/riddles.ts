@@ -110,7 +110,7 @@ export const riddles_dataset = [
   {
     id: "21",
     input: "Where do fish keep their money?",
-    expected: "Riverbank",
+    expected: "Riverbank, river bank",
   },
   {
     id: "22",
@@ -127,7 +127,7 @@ export const riddles_dataset = [
   {
     id: "24",
     input: "What bone has a sense of humor?",
-    expected: "Humorous",
+    expected: "Humerus",
   },
   {
     id: "25",
@@ -174,7 +174,7 @@ export const riddles_dataset = [
     id: "33",
     input:
       "Your mother's brother's only brother-in-law is asleep on your coach. Who is asleep on your couch?",
-    expected: "Dad",
+    expected: "Dad, Father",
   },
   {
     id: "34",
@@ -194,7 +194,7 @@ export const riddles_dataset = [
   {
     id: "37",
     input: "What doesn't get any wetter, no matter how much rain falls on it?",
-    expected: "Water",
+    expected: "Ocean, Sea, River, Lake",
   },
   {
     id: "38",
@@ -221,7 +221,7 @@ export const riddles_dataset = [
   {
     id: "42",
     input: "What do you call a dog that sweats so much?",
-    expected: "Hotdog",
+    expected: "Hotdog, hot dog",
   },
   {
     id: "43",
@@ -236,7 +236,7 @@ export const riddles_dataset = [
   {
     id: "45",
     input: "What kind of apple has a short temper?",
-    expected: "Crabapple",
+    expected: "Crabapple, crab apple",
   },
   {
     id: "46",
@@ -259,7 +259,7 @@ export const riddles_dataset = [
     id: "49",
     input:
       "What is 2+2? What is 4+4? What is 8+8? What is 16+16? Pick a number between 12 and 5",
-    expected: "Seven",
+    expected: "Seven, 7",
   },
   {
     id: "50",
@@ -306,7 +306,7 @@ export const riddles_dataset = [
     id: "58",
     input:
       "There are four of these, but everyone's favourite seems to be spades",
-    expected: "Ace",
+    expected: "Suits",
   },
   {
     id: "59",
@@ -337,7 +337,7 @@ export const riddles_dataset = [
   {
     id: "64",
     input: "Has 4 lucky leaves",
-    expected: "Shamrock",
+    expected: "Shamrock, clover, four-leaf clover",
   },
   {
     id: "65",
@@ -419,7 +419,7 @@ export const riddles_dataset = [
     id: "80",
     input:
       "If two hours ago, it was as long after one o'clock in the afternoon as it was before one o'clock in the morning, what time would it be now?",
-    expected: "Nine",
+    expected: "Nine, 9",
   },
   {
     id: "81",
@@ -469,7 +469,7 @@ export const riddles_dataset = [
   {
     id: "89",
     input: "How many 9's are there between 1 and 100?",
-    expected: "Twenty",
+    expected: "20, Twenty",
   },
   {
     id: "90",
@@ -508,7 +508,7 @@ export const riddles_dataset = [
     id: "96",
     input:
       "If it is two hours later, then it will take half as much time till it's midnight as it would be if it were an hour later. What time is it?",
-    expected: "Nine",
+    expected: "Nine, 9",
   },
   {
     id: "97",

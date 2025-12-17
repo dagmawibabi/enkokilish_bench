@@ -8,7 +8,7 @@ import { modelsToBenchmark } from "../eval_config/models_to_benchmark";
 import { systemPrompt, systemPrompt2 } from "../eval_config/system_prompt";
 
 // Import Dataset
-const dataset = riddles_dataset; // enkokilish_dataset; // riddles_dataset;
+const dataset = enkokilish_dataset; // riddles_dataset;
 
 // Benchmark
 evalite.each(modelsToBenchmark)("Enkokilish Bench", {
@@ -56,8 +56,8 @@ evalite.each(modelsToBenchmark)("Enkokilish Bench", {
     {
       scorer: ({ output, expected }) =>
         contains({
-          actual: output.text,
-          expected: expected,
+          actual: output.text.toLowerCase(),
+          expected: expected.toLowerCase(),
         }),
     },
   ],

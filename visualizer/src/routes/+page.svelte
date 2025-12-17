@@ -1,23 +1,4 @@
 <script lang="ts">
-	import gemini25flash from '$lib/results/gemini-2.5-flash.json';
-	import gemini25flashlite from '$lib/results/gemini-2.5-flash-lite.json';
-	import gemini20flashlite from '$lib/results/gemini-2.0-flash-lite.json';
-	import grok4fastnonreasoning from '$lib/results/grok-4-fast-non-reasoning.json';
-	import llama318b from '$lib/results/llama-3.1-8b.json';
-	import deepseekv32 from '$lib/results/deepseek-v3.2.json';
-	import novalite from '$lib/results/nova-lite.json';
-	import trinitymini from '$lib/results/trinity-mini.json';
-	import gptoss20b from '$lib/results/gpt-oss-20b.json';
-	// import english_riddles from '$lib/results/english/';
-	import gemini25flashen from '$lib/results/english/gemini-2.5-flash-en.json';
-	import gemini25flashliteen from '$lib/results/english/gemini-2.5-flash-lite-en.json';
-	import gemini20flashliteen from '$lib/results/english/gemini-2.0-flash-lite-en.json';
-	import grok4fastnonreasoningen from '$lib/results/english/grok-4-fast-non-reasoning-en.json';
-	import llama318ben from '$lib/results/english/llama-3.1-8b-en.json';
-	import deepseekv32en from '$lib/results/english/deepseek-v3.2-en.json';
-	import novaliteen from '$lib/results/english/nova-lite-en.json';
-	import trinityminien from '$lib/results/english/trinity-mini-en.json';
-	import gptoss20ben from '$lib/results/english/gpt-oss-20b-en.json';
 	import Date from '../components/date.svelte';
 	import FailGraph from '../components/fail_graph.svelte';
 	import Header from '../components/header.svelte';
@@ -34,9 +15,34 @@
 	// import DurationGraphMobile from '../components/duration_graph_mobile.svelte';
 	// import SuccessFailGraph from '../components/success_fail_graph.svelte';
 
+	//
+	import gemini3flash from '$lib/results/gemini-3-flash.json';
+	import gemini25flash from '$lib/results/gemini-2.5-flash.json';
+	import gemini25flashlite from '$lib/results/gemini-2.5-flash-lite.json';
+	import gemini20flashlite from '$lib/results/gemini-2.0-flash-lite.json';
+	import grok4fastnonreasoning from '$lib/results/grok-4-fast-non-reasoning.json';
+	import llama318b from '$lib/results/llama-3.1-8b.json';
+	import deepseekv32 from '$lib/results/deepseek-v3.2.json';
+	import novalite from '$lib/results/nova-lite.json';
+	import trinitymini from '$lib/results/trinity-mini.json';
+	import gptoss20b from '$lib/results/gpt-oss-20b.json';
+	//
+	import gemini3flashen from '$lib/results/english/gemini-3-flash-en.json';
+	import gemini25flashen from '$lib/results/english/gemini-2.5-flash-en.json';
+	import gemini25flashliteen from '$lib/results/english/gemini-2.5-flash-lite-en.json';
+	import gemini20flashliteen from '$lib/results/english/gemini-2.0-flash-lite-en.json';
+	import grok4fastnonreasoningen from '$lib/results/english/grok-4-fast-non-reasoning-en.json';
+	import llama318ben from '$lib/results/english/llama-3.1-8b-en.json';
+	import deepseekv32en from '$lib/results/english/deepseek-v3.2-en.json';
+	import novaliteen from '$lib/results/english/nova-lite-en.json';
+	import trinityminien from '$lib/results/english/trinity-mini-en.json';
+	import gptoss20ben from '$lib/results/english/gpt-oss-20b-en.json';
+	//
+
 	const formatter = new Intl.NumberFormat('en-US');
 
 	let rawResultsAM = [
+		gemini3flash,
 		gemini25flash,
 		gemini25flashlite,
 		gemini20flashlite,
@@ -49,6 +55,7 @@
 	];
 
 	let rawResultsEN = [
+		gemini3flashen,
 		gemini25flashen,
 		gemini25flashliteen,
 		gemini20flashliteen,

@@ -11,4 +11,5 @@ export const modelsToBenchmark = [
   },
   { name: "gemini-2.5-flash", input: "google/gemini-2.5-flash" },
   { name: "gemini-2.0-flash-lite", input: "google/gemini-2.0-flash-lite" },
+  { name: "gemini-3-flash", input: "google/gemini-3-flash" },
 ];
