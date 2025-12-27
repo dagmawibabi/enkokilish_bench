@@ -4,10 +4,12 @@
     "eval:dev": "evalite watch"
   },
   "devDependencies": {
+    "@types/node": "^25.0.3",
     "vitest": "^4.0.14"
   },
   "dependencies": {
     "@ai-sdk/google": "^2.0.44",
+    "@openrouter/ai-sdk-provider": "^1.5.4",
     "ai": "^5.0.104",
     "better-sqlite3": "^11.6.0",
     "evalite": "1.0.0-beta.15"

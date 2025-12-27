@@ -15,7 +15,7 @@
 	// import DurationGraphMobile from '../components/duration_graph_mobile.svelte';
 	// import SuccessFailGraph from '../components/success_fail_graph.svelte';
 
-	//
+	// Amharic
 	import gemini3flash from '$lib/results/gemini-3-flash.json';
 	import gemini25flash from '$lib/results/gemini-2.5-flash.json';
 	import gemini25flashlite from '$lib/results/gemini-2.5-flash-lite.json';
@@ -26,7 +26,11 @@
 	import novalite from '$lib/results/nova-lite.json';
 	import trinitymini from '$lib/results/trinity-mini.json';
 	import gptoss20b from '$lib/results/gpt-oss-20b.json';
-	//
+	import olmo3132bthink from '$lib/results/olmo-3.1-32b-think.json';
+	import devstral2512 from '$lib/results/devstral-2512.json';
+	import glm45air from '$lib/results/glm-4.5-air.json';
+
+	// English
 	import gemini3flashen from '$lib/results/english/gemini-3-flash-en.json';
 	import gemini25flashen from '$lib/results/english/gemini-2.5-flash-en.json';
 	import gemini25flashliteen from '$lib/results/english/gemini-2.5-flash-lite-en.json';
@@ -37,6 +41,9 @@
 	import novaliteen from '$lib/results/english/nova-lite-en.json';
 	import trinityminien from '$lib/results/english/trinity-mini-en.json';
 	import gptoss20ben from '$lib/results/english/gpt-oss-20b-en.json';
+	import olmo3132bthinken from '$lib/results/english/olmo-3.1-32b-think-en.json';
+	import devstral2512en from '$lib/results/english/devstral-2512-en.json';
+	import glm45airen from '$lib/results/english/glm-4.5-air-en.json';
 	//
 
 	const formatter = new Intl.NumberFormat('en-US');
@@ -51,7 +58,10 @@
 		deepseekv32,
 		novalite,
 		trinitymini,
-		gptoss20b
+		gptoss20b,
+		olmo3132bthink,
+		devstral2512,
+		glm45air
 	];
 
 	let rawResultsEN = [
@@ -64,7 +74,10 @@
 		deepseekv32en,
 		novaliteen,
 		trinityminien,
-		gptoss20ben
+		gptoss20ben,
+		olmo3132bthinken,
+		devstral2512en,
+		glm45airen
 	];
 
 	let evalResults: eachEvalResultType[] = $state([]);
@@ -113,7 +126,11 @@
 							Number(eachEvalResult.totalOutputTokens) + step.usage.outputTokens;
 						eachEvalResult.totalTokens =
 							Number(eachEvalResult.totalTokens) + step.usage.totalTokens;
-						eachEvalResult.totalCost += Number(step.response.body.providerMetadata.gateway.cost);
+						try {
+							eachEvalResult.totalCost += Number(step.response.body.providerMetadata.gateway.cost);
+						} catch (e) {
+							eachEvalResult.totalCost += 0;
+						}
 					}
 				}
 			}

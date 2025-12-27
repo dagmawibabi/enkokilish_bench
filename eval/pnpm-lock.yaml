@@ -11,6 +11,9 @@ importers:
       '@ai-sdk/google':
         specifier: ^2.0.44
         version: 2.0.44(zod@4.1.13)
+      '@openrouter/ai-sdk-provider':
+        specifier: ^1.5.4
+        version: 1.5.4(ai@5.0.104(zod@4.1.13))(zod@4.1.13)
       ai:
         specifier: ^5.0.104
         version: 5.0.104(zod@4.1.13)
@@ -21,9 +24,12 @@ importers:
         specifier: 1.0.0-beta.15
         version: 1.0.0-beta.15(ai@5.0.104(zod@4.1.13))(better-sqlite3@11.10.0)
     devDependencies:
+      '@types/node':
+        specifier: ^25.0.3
+        version: 25.0.3
       vitest:
         specifier: ^4.0.14
-        version: 4.0.14(@opentelemetry/api@1.9.0)(jiti@2.6.1)
+        version: 4.0.14(@opentelemetry/api@1.9.0)(@types/node@25.0.3)(jiti@2.6.1)
 
 packages:
 
@@ -257,6 +263,16 @@ packages:
     resolution: {integrity: sha512-9I2Zn6+NJLfaGoz9jN3lpwDgAYvfGeNYdbAIjJOqzs4Tpc+VU3Jqq4IofSUBKajiDS8k9fZIg18/z13mpk1bsA==}
     engines: {node: '>=8'}
 
+  '@openrouter/ai-sdk-provider@1.5.4':
+    resolution: {integrity: sha512-xrSQPUIH8n9zuyYZR0XK7Ba0h2KsjJcMkxnwaYfmv13pKs3sDkjPzVPPhlhzqBGddHb5cFEwJ9VFuFeDcxCDSw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      ai: ^5.0.0
+      zod: ^3.24.1 || ^v4
+
+  '@openrouter/sdk@0.1.27':
+    resolution: {integrity: sha512-RH//L10bSmc81q25zAZudiI4kNkLgxF2E+WU42vghp3N6TEvZ6F0jK7uT3tOxkEn91gzmMw9YVmDENy7SJsajQ==}
+
   '@opentelemetry/api@1.9.0':
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
     engines: {node: '>=8.0.0'}
@@ -398,6 +414,9 @@ packages:
 
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
+
+  '@types/node@25.0.3':
+    resolution: {integrity: sha512-W609buLVRVmeW693xKfzHeIV6nJGGz98uCPfeXI1ELMLXVeKYZ9m15fAMSaUPBHYLGFsVRcMmSCksQOrZV9BYA==}
 
   '@vercel/oidc@3.0.5':
     resolution: {integrity: sha512-fnYhv671l+eTTp48gB4zEsTW/YtRgRPnkI2nT7x6qw5rkI1Lq2hTmQIpHPgyThI0znLK+vX2n9XxKdXZ7BUbbw==}
@@ -1015,6 +1034,9 @@ packages:
     resolution: {integrity: sha512-rvKSBiC5zqCCiDZ9kAOszZcDvdAHwwIKJG33Ykj43OKcWsnmcBRL09YTU4nOeHZ8Y2a7l1MgTd08SBe9A8Qj6A==}
     engines: {node: '>=18'}
 
+  undici-types@7.16.0:
+    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
+
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -1304,6 +1326,16 @@ snapshots:
 
   '@lukeed/ms@2.0.2': {}
 
+  '@openrouter/ai-sdk-provider@1.5.4(ai@5.0.104(zod@4.1.13))(zod@4.1.13)':
+    dependencies:
+      '@openrouter/sdk': 0.1.27
+      ai: 5.0.104(zod@4.1.13)
+      zod: 4.1.13
+
+  '@openrouter/sdk@0.1.27':
+    dependencies:
+      zod: 4.1.13
+
   '@opentelemetry/api@1.9.0': {}
 
   '@pinojs/redact@0.4.0': {}
@@ -1395,6 +1427,10 @@ snapshots:
 
   '@types/estree@1.0.8': {}
 
+  '@types/node@25.0.3':
+    dependencies:
+      undici-types: 7.16.0
+
   '@vercel/oidc@3.0.5': {}
 
   '@vitest/expect@4.0.14':
@@ -1406,13 +1442,13 @@ snapshots:
       chai: 6.2.1
       tinyrainbow: 3.0.3
 
-  '@vitest/mocker@4.0.14(vite@7.2.4(jiti@2.6.1))':
+  '@vitest/mocker@4.0.14(vite@7.2.4(@types/node@25.0.3)(jiti@2.6.1))':
     dependencies:
       '@vitest/spy': 4.0.14
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.2.4(jiti@2.6.1)
+      vite: 7.2.4(@types/node@25.0.3)(jiti@2.6.1)
 
   '@vitest/pretty-format@4.0.14':
     dependencies:
@@ -2052,9 +2088,11 @@ snapshots:
 
   uint8array-extras@1.5.0: {}
 
+  undici-types@7.16.0: {}
+
   util-deprecate@1.0.2: {}
 
-  vite@7.2.4(jiti@2.6.1):
+  vite@7.2.4(@types/node@25.0.3)(jiti@2.6.1):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.3)
@@ -2063,13 +2101,14 @@ snapshots:
       rollup: 4.53.3
       tinyglobby: 0.2.15
     optionalDependencies:
+      '@types/node': 25.0.3
       fsevents: 2.3.3
       jiti: 2.6.1
 
-  vitest@4.0.14(@opentelemetry/api@1.9.0)(jiti@2.6.1):
+  vitest@4.0.14(@opentelemetry/api@1.9.0)(@types/node@25.0.3)(jiti@2.6.1):
     dependencies:
       '@vitest/expect': 4.0.14
-      '@vitest/mocker': 4.0.14(vite@7.2.4(jiti@2.6.1))
+      '@vitest/mocker': 4.0.14(vite@7.2.4(@types/node@25.0.3)(jiti@2.6.1))
       '@vitest/pretty-format': 4.0.14
       '@vitest/runner': 4.0.14
       '@vitest/snapshot': 4.0.14
@@ -2086,10 +2125,11 @@ snapshots:
       tinyexec: 0.3.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.2.4(jiti@2.6.1)
+      vite: 7.2.4(@types/node@25.0.3)(jiti@2.6.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@opentelemetry/api': 1.9.0
+      '@types/node': 25.0.3
     transitivePeerDependencies:
       - jiti
       - less

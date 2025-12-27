@@ -8,7 +8,13 @@ import { modelsToBenchmark } from "../eval_config/models_to_benchmark";
 import { systemPrompt, systemPrompt2 } from "../eval_config/system_prompt";
 
 // Import Dataset
-const dataset = enkokilish_dataset; // riddles_dataset;
+const dataset = enkokilish_dataset; // enkokilish_dataset or riddles_dataset;
+
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+
+const openrouter = createOpenRouter({
+  apiKey: process.env.OPENROUTER_API_KEY,
+});
 
 // Benchmark
 evalite.each(modelsToBenchmark)("Enkokilish Bench", {
@@ -17,7 +23,7 @@ evalite.each(modelsToBenchmark)("Enkokilish Bench", {
     try {
       const result = await generateText({
         model: model,
-        system: systemPrompt2, // systemPrompt2
+        system: systemPrompt, // systemPrompt2
         prompt: input,
       });
 
@@ -89,7 +95,7 @@ evalite.each(modelsToBenchmark)("Enkokilish Bench", {
       },
       {
         label: "Cost",
-        value: output.providerMetadata?.["gateway"]["marketCost"] || 0,
+        value: 0, // output.providerMetadata?.["gateway"]["marketCost"] || 0,
       },
     ];
   },
